@@ -1,0 +1,20 @@
+*.pyc
+__pycache__/
+*.sw*
+db.sqlite
+
+# Distributions.
+.eggs/
+build/
+dist/
+
+# Testing
+.coverage
+htmlcov
+.tox
+
+# Docs
+_build
+
+# Development
+.vscode
