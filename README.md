@@ -56,3 +56,21 @@ The package integrates with the amazing [Django Allauth](https://github.com/penn
     ```
 
 4. Run python manage.py migrate to create the allauth_sniperlinks models.
+
+## Settings
+
+* ALLAUTH_SNIPERLINKS_VERIFICATION_SENDER
+    Set the email used to send verification senders. This is used when creating sniper links, see features section below for an example.
+    
+    Defaults to DEFAULT_FROM_EMAIL.
+
+
+## Features
+
+Out of the box, a button with a sniper link for the email address submitted will be included in the message that appears after a verification email has been sent, e.g.: ![Sniper Link Sample Image](readme_images/SniperLinkSampleImg.png)
+
+The button will open up the users webmail browser in another tab and attempt to pull up any emails sent from the address configured by ALLAUTH_SNIPERLINKS_VERIFICATION_SENDER.
+
+The icon will change to match the webmail provider. See models.MailProviders for a list of currently supported webmail providers. 
+
+Unsupported mail providers will not show a sniper link button.
