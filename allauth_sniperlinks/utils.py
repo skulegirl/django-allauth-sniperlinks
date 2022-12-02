@@ -4,10 +4,10 @@ import tld
 import dns.resolver
 from django.contrib.staticfiles import finders
 from django.templatetags.static import static
-from .models import MailProviders, INVALID_EMAIL_FLAG
+from .models import MailProviders
 
 INVALID_EMAIL_FLAG = 'INVALIDEMAIL'
-
+USER_SNIPERLINK_CACHE_KEY = 'sniperlinks_user_{}'
 
 def get_sniper_link_img(mail_provider):
     try:

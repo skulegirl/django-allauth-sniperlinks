@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from allauth.account.models import EmailAddress
 
 # Create your models here.

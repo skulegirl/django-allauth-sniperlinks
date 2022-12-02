@@ -7,6 +7,7 @@ db.sqlite
 .eggs/
 build/
 dist/
+django_allauth_sniperlinks.egg-info
 
 # Testing
 .coverage
