@@ -11,15 +11,15 @@ USER_SNIPERLINK_CACHE_KEY = 'sniperlinks_user_{}'
 
 def get_sniper_link_img(mail_provider):
     try:
-        filename = 'images/allauth_sniperlinks/provider_icons/{}.svg'.format(
+        filename = 'allauth_sniperlinks/provider_icons/{}.svg'.format(
             dict(MailProviders.choices)[mail_provider]
         )
         if finders.find(filename):
             filepath = static(filename)
         else: 
-            filepath = static('images/allauth_sniperlinks/provider_icons/generic.svg')
+            filepath = static('allauth_sniperlinks/provider_icons/generic.svg')
     except KeyError:
-        filepath = static('images/allauth_sniperlinks/provider_icons/generic.svg')
+        filepath = static('allauth_sniperlinks/provider_icons/generic.svg')
         
     return filepath
 

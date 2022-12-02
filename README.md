@@ -10,15 +10,19 @@ The package integrates with the amazing [Django Allauth](https://github.com/penn
 
 ## Quick start
 
-1. Add "allauth_sniperlinks" to your INSTALLED_APPS setting like this::
-    ```INSTALLED_APPS = [
-            ...
-            'allauth_sniperlinks',
-        ]
+1. Add "allauth_sniperlinks" to your INSTALLED_APPS setting **before the allauth package**  like this:
+    ```
+    INSTALLED_APPS = [
+        ...
+        'allauth_sniperlinks',
+        'allauth',
+        ...
+    ]
     ```
 
-2. Add "allauth_sniperlinks.context_processors.unverified_email_sniperlinks" to the 'context_processors' option in your TEMPLATES setting::
-    ```TEMPLATES = [
+2. Add "allauth_sniperlinks.context_processors.unverified_email_sniperlinks" to the 'context_processors' option in your TEMPLATES setting:
+    ```
+    TEMPLATES = [
         {
             ...
             'OPTIONS': {
@@ -33,4 +37,22 @@ The package integrates with the amazing [Django Allauth](https://github.com/penn
     ]
     ```
 
-3. Run python manage.py migrate to create the allauth_sniperlinks models.
+3. In settings, set `ACCOUNT_ADAPTER="allauth_sniperlinks.adapter.SniperLinkAccountAdapter"`.
+
+    If you have already overridden the account adapter to support another allauth package, you may need to create a custom account adapter that inherits from both adapters.
+    
+    E.g. in myapp/adapters.py:
+    ```
+    from allauth_sniperlinks.adapter import SniperLinkAccountAdapter
+    from apps.teams.adapter import AcceptInvitationAdapter
+
+    class MyappAccountAdapter(AcceptInvitationAdapter, SniperLinkAccountAdapter):
+        pass
+    ```
+
+    And in settings.py:
+    ```
+    ACCOUNT_ADAPTER = 'myapp.adapters.MyappAccountAdapter'
+    ```
+
+4. Run python manage.py migrate to create the allauth_sniperlinks models.

@@ -43,6 +43,8 @@ class SniperLink(models.Model):
     )
     mail_provider = models.CharField(
         max_length=30,
+        null=True,
+        blank=True,
         choices=MailProviders.choices,
         default=MailProviders.UNKNOWN,
     )
