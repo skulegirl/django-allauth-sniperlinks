@@ -1,3 +1,5 @@
 include LICENSE
 include README.md
 recursive-include allauth_sniperlinks/static *
+recursive-include allauth_sniperlinks/templates *
+recursive-include allauth_sniperlinks/templatetags *
