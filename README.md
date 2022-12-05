@@ -67,10 +67,60 @@ The package integrates with the amazing [Django Allauth](https://github.com/penn
 
 ## Features
 
-Out of the box, a button with a sniper link for the email address submitted will be included in the message that appears after a verification email has been sent, e.g.: ![Sniper Link Sample Image](readme_images/SniperLinkSampleImg.png)
+1. Out of the box, a button with a sniper link for the email address submitted will be included in the message that appears after a verification email has been sent, e.g.: 
 
-The button will open up the users webmail browser in another tab and attempt to pull up any emails sent from the address configured by ALLAUTH_SNIPERLINKS_VERIFICATION_SENDER.
+    ![Sniper Link Sample Image](readme_images/SniperLinkSampleImg.png)
 
-The icon will change to match the webmail provider. See models.MailProviders for a list of currently supported webmail providers. 
+    The button will open up the users webmail browser in another tab and attempt to pull up any emails sent from the address configured by ALLAUTH_SNIPERLINKS_VERIFICATION_SENDER.
 
-Unsupported mail providers will not show a sniper link button.
+    You can override the display of this button by copying the file `templates/account/messages/email_confirmation_sent.txt`
+    into your own template directory and changing the html directly.
+
+    The icon will change to match the webmail provider. See models.MailProviders for a list of currently supported webmail providers. 
+
+    Unsupported mail providers will not show a sniper link button.
+
+2. A `unverified_email_banner` template tag can be included in your main template which will 
+display a banner with a prompt to verify their email address and a sniper link, if they have 
+an unverified email address. To access this, include `{% load sniperlink_tags %}` in your template,
+e.g.:
+
+    ```
+    {% load sniperlink_tags %}
+
+    {# Output the unverified email banner, if applicable #}
+    {% unverified_email_banner %}
+    ```
+
+    You can add classes to the banner and button link objects by passing in `banner_class` and `link_class` 
+variables, like this:
+
+    ```
+    {% unverified_email_banner banner_class="bg-yellow-100 my-2 py-1" link_class="button bg-blue-700 text-white" %}
+    ```
+
+    If a user had two unverified email addresses associated with their account, this would result
+    in banners similar to this appearing in the location where the tag was placed:
+
+    ![Sniper Link Banner](readme_images/SniperLinkBanners.png)
+3. A list of all unverified emails along with sniper links and images for the appropriate 
+webmail provider, if appropriate, are injected into the CONTEXT of all pages. You can access
+this via the "sniperlinks" context variable, which will contain a dictionary of unverified emails for
+the authenticated user, keyed by email address, with each value represented as another dictionary with
+keys of "link" with the URL for the sniper link and "img" with the path to the image for
+their webmail provider's icon.
+
+    For example, in a template, accesssing the `{{sniperlinks}}` context variable will provide 
+    something like this:
+    ```
+    {
+      'test@gmail.com' : {
+        'link': 'https://mail.google.com/mail/u/0/#search/from%3A%40mydomain.com%3E+in%3Aanywhere',
+        'img': '/static/allauth_sniperlinks/provider_icons/Gsuite.svg',
+      }
+    }
+    ```
+
+    Note that the context variable is cached so that each page display does not require a
+    database query. The cache entry for the user is invalidated whenever a new email address
+    for the user is added or an existing one is changed in some way.

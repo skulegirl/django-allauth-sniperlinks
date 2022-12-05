@@ -16,7 +16,7 @@ def unverified_email_sniperlinks(request):
             unverified_email_sls = SniperLink.objects.filter(
                 email_object__user=request.user, 
                 email_object__verified=False
-            )
+            ).order_by('email_object__primary')
             for sl in unverified_email_sls:
                 sniperlinks_context[sl.email_object.email] = {
                     'link': get_sniper_link(sl.mail_provider, sl.email_object.email, VERIFICATION_SENDER),

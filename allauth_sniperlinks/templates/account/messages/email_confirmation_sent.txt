@@ -5,8 +5,7 @@
 {% blocktrans %}Confirmation e-mail sent to {{email}}.{% endblocktrans %}
 {% get_sniperlink_for_email sniperlinks email as sniperlink %}
 {% if sniperlink and sniperlink.link %}
-{{sniper}}
-<a href="{{sniperlink.link}}" class="button primaryAction" target="_blank">
+<a href="{{sniperlink.link}}" class="button" target="_blank">
   <img src="{{sniperlink.img}}" alt="mail provider icon" width="20px" style="display:inline; margin-right: 5px"/>
   Open verification email
 </a>
