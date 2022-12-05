@@ -62,7 +62,7 @@ The package integrates with the amazing [Django Allauth](https://github.com/penn
 * ALLAUTH_SNIPERLINKS_VERIFICATION_SENDER
     Set the email used to send verification senders. This is used when creating sniper links, see features section below for an example.
     
-    Defaults to DEFAULT_FROM_EMAIL.
+    Defaults to `settings.DEFAULT_FROM_EMAIL`.
 
 
 ## Features
