@@ -14,7 +14,6 @@ def get_sniperlink_for_email(sniperlinks, email):
 
 @register.simple_tag(takes_context=True)
 def unverified_email_banner(context, banner_class="", link_class=""):
-    print("Hi mom!")
     sniperlinks = context['sniperlinks']
     context['banner_class'] = banner_class
     context['link_class'] = link_class
