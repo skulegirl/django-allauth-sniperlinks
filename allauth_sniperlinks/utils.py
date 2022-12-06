@@ -4,10 +4,23 @@ import tld
 import dns.resolver
 from django.contrib.staticfiles import finders
 from django.templatetags.static import static
+from django.core.cache import cache
 from .models import MailProviders
 
 INVALID_EMAIL_FLAG = 'INVALIDEMAIL'
-USER_SNIPERLINK_CACHE_KEY = 'sniperlinks_user_{}'
+USER_SNIPERLINK_CACHE_PREFIX = 'sniperlinks_user_'
+USER_SNIPERLINK_CACHE_KEY = USER_SNIPERLINK_CACHE_PREFIX + '{}'
+SNIPERLINKS_CACHE_VERSION_KEY = 'sniperlinks_version'
+
+
+def get_sniperlink_cache_version():
+    return cache.get(SNIPERLINKS_CACHE_VERSION_KEY)
+
+def bump_sniperlink_cache_version():
+    ts_val = int(time.time())
+    # attempt to cache forever (but may get bumped), set to current timestamp
+    cache.set(SNIPERLINKS_CACHE_VERSION_KEY, ts_val, timeout=None)
+    return ts_val
 
 def get_sniper_link_img(mail_provider):
     try:

@@ -57,14 +57,6 @@ The package integrates with the amazing [Django Allauth](https://github.com/penn
 
 4. Run python manage.py migrate to create the allauth_sniperlinks models.
 
-## Settings
-
-* ALLAUTH_SNIPERLINKS_VERIFICATION_SENDER
-    Set the email used to send verification senders. This is used when creating sniper links, see features section below for an example.
-    
-    Defaults to `settings.DEFAULT_FROM_EMAIL`.
-
-
 ## Features
 
 1. Out of the box, a button with a sniper link for the email address submitted will be included in the message that appears after a verification email has been sent, e.g.: 
@@ -103,6 +95,8 @@ variables, like this:
     in banners similar to this appearing in the location where the tag was placed:
 
     ![Sniper Link Banner](readme_images/SniperLinkBanners.png)
+
+    If you wish to edit the contents of the banner, override the `templates/allauth_sniperlinks/banner.html` file in your own templates directory structure.
 3. A list of all unverified emails along with sniper links and images for the appropriate 
 webmail provider, if appropriate, are injected into the CONTEXT of all pages. You can access
 this via the "sniperlinks" context variable, which will contain a dictionary of unverified emails for
@@ -124,3 +118,23 @@ their webmail provider's icon.
     Note that the context variable is cached so that each page display does not require a
     database query. The cache entry for the user is invalidated whenever a new email address
     for the user is added or an existing one is changed in some way.
+
+## Settings
+
+* ALLAUTH_SNIPERLINKS_VERIFICATION_SENDER
+    Set the email used to send verification senders. This is used when creating sniper links, see features section above for an example.
+    
+    Defaults to `settings.DEFAULT_FROM_EMAIL`.
+
+* ALLAUTH_SNIPERLINKS_BANNER_ONLY_PRIMARY
+    If True, then the `unverified_email_banner` template tag will only create a banner for an unverified address if it is the primary one. Otherwise, multiple banners may appear for each unverified email address associated with the account.
+
+    Defaults to `True`.
+
+## Management Commands
+
+* `python manage.py clear_sniperlink_cache`
+    This command will clear out the sniperlink cache used by the context processor. It does this by incrementing a version number used for all sniperlink cache entries. Otherwise, all sniperlink cache entries for users have a timeout of 5 minutes.
+
+    This may be useful if you change the ALLAUTH_SNIPERLINKS_BANNER_ONLY_PRIMARY setting and don't want to wait for the 5 minute timeout for the banners to update.
+
