@@ -257,7 +257,7 @@ def get_sniper_link(mail_provider, email_address, outgoing_email_address):
 
     if mail_provider == MailProviders.PROTONMAIL:
         # Supports searching all with all-mail
-        return "https://mail.protonmail.com/u/0/all-mail#from={}".format(
+        return "https://mail.proton.me/u/0/all-mail#from={}".format(
             sending_domain
         )
 
