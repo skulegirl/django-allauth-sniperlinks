@@ -7,7 +7,7 @@ from allauth.account.adapter import DefaultAccountAdapter
 from allauth_sniperlinks import app_settings
 
 
-class SniperLinkAccountAdapter(DefaultAccountAdapter):
+class SniperLinkAccountAdapterMixin:
     def add_message(
         self,
         request,
@@ -35,3 +35,7 @@ class SniperLinkAccountAdapter(DefaultAccountAdapter):
                     messages.add_message(request, level, message, extra_tags=extra_tags)
             except TemplateDoesNotExist:
                 pass
+
+
+class SniperLinkAccountAdapter(SniperLinkAccountAdapterMixin, DefaultAccountAdapter):
+    pass

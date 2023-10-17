@@ -43,8 +43,11 @@ The package integrates with the amazing [Django Allauth](https://github.com/penn
     
     E.g. in `myapp/adapters.py`:
     ```python
+    from allauth.account.adapter import DefaultAccountAdapter
+    from allauth_sniperlinks.adapter import SniperLinkAccountAdapterMixin
+    from invitations.adapters import BaseInvitationsAdapter
 
-    class MyappAccountAdapter(AcceptInvitationAdapter, SniperLinkAccountAdapter):
+    class MyappAccountAdapter(BaseInvitationsAdapter, SniperLinkAccountAdapterMixin, DefaultAccountAdapter):
         pass
     ```
 
